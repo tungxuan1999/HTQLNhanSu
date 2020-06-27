@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="employeeat" Class="DataPaymentDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=den1.mssql8.gear.host;Initial Catalog=employeeat;User ID=employeeat" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="employeeatConnectionString1" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.payment" Member="payments">
+    <Type Name="payment">
+      <Column Name="ID" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Position" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Workingdays" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Bonus" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Salary" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+</Database>
