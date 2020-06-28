@@ -26,7 +26,7 @@ namespace Client
         {
             listKey = new List<string>();
             listKey.Add("Tất cả");
-            listKey.AddRange(new SalaryBUS().GetKey());
+            listKey.AddRange(new DepartmentBUS().GetKey().LISTposition);
             comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox1.DataSource = listKey;
         }
@@ -104,13 +104,12 @@ namespace Client
             bool result = salaryBUS.Update(new SalaryBUS.FilePut(DataStatic.user, DataStatic.token, updateSalary));
             if(result)
             {
-                MessageBox.Show("Update Salary Success");
+                MessageBox.Show("Cập nhật thành công");
                 ChangedDataGridView();
             }
             else
             {
-                MessageBox.Show("Update Salary Success");
-                ChangedDataGridView();
+                MessageBox.Show("Cập nhật thất bại");
             }
         }
     }

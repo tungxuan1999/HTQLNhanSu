@@ -21,13 +21,6 @@ namespace HTQLNhanSu.Controllers
 
         [HttpGet]
         [Route("api/payment")]
-        public IHttpActionResult GetKey()
-        {
-            return Json(new SalaryDAOSQL().GetKey());
-        }
-
-        [HttpGet]
-        [Route("api/payment")]
         public IHttpActionResult SelectALLPayment(String user, String token)
         {
             return Json(new SalaryMIDDLE().SelectALLPayment(user, token));

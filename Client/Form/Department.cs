@@ -97,13 +97,12 @@ namespace Client
             bool result = departmentBUS.Insert(new DepartmentBUS.FilePut(newEmployee, DataStatic.user, DataStatic.token));
             if (result)
             {
-                MessageBox.Show("Add Success");
+                MessageBox.Show("Thêm thành công");
                 ChangeDataGridView();
             }
             else
             {
-                MessageBox.Show("Add Fail");
-                ChangeDataGridView();
+                MessageBox.Show("Thêm thất bại");
             }
         }
 
@@ -113,31 +112,29 @@ namespace Client
             bool result = departmentBUS.Update(new DepartmentBUS.FilePut(updateEmployee, DataStatic.user, DataStatic.token));
             if (result)
             {
-                MessageBox.Show("Update Success");
+                MessageBox.Show("Cập nhật thành công");
                 ChangeDataGridView();
             }
             else
             {
-                MessageBox.Show("Update Fail");
-                ChangeDataGridView();
+                MessageBox.Show("Cập nhật thất bại");
             }
         }
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("Are you sure?", "Delete?", MessageBoxButtons.YesNo);
+            DialogResult dialogResult = MessageBox.Show("Bạn có chắc xóa không", "Xóa?", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
                 DepartmentBUS.Employee deleteEmployee = new DepartmentBUS.Employee(textBox2.Text, textBox3.Text, textBox4.Text, textBox5.Text, textBox6.Text, textBox7.Text);
                 bool result = departmentBUS.Delete(new DepartmentBUS.FilePut(deleteEmployee, DataStatic.user, DataStatic.token));
                 if (result)
                 {
-                    MessageBox.Show("Delete Success");
+                    MessageBox.Show("Xóa thành công");
                     ChangeDataGridView();
                 }
                 else
                 {
-                    MessageBox.Show("Delete Fail");
-                    ChangeDataGridView();
+                    MessageBox.Show("Xóa thất bại");
                 }
             }
             else

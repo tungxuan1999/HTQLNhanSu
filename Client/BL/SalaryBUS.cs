@@ -37,18 +37,6 @@ namespace Client.BL
             return JsonConvert.DeserializeObject<List<payment>>(response);
         }
 
-        public List<String> GetKey()
-        {
-            WebClient client = new WebClient();
-
-            /* GetSelectByName_HttpGet */
-            client.Headers[HttpRequestHeader.ContentType] = "application/json";
-            client.Headers.Add(HttpRequestHeader.AcceptCharset, "utf-8");
-            client.Encoding = Encoding.UTF8;
-            String response = client.DownloadString(new Uri(URL + "api/payment"));
-            return JsonConvert.DeserializeObject<List<String>>(response);
-        }
-
         public List<payment> SelectByName(String user, String token, String keyword)
         {
             WebClient client = new WebClient();

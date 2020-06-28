@@ -101,14 +101,5 @@ namespace HTQLNhanSu.DAL
                        select p).ToList();
             return animals;
         }
-
-        public List<String> GetKey()
-        {
-            dbPayment.ObjectTrackingEnabled = false;
-            List<payment> employees = dbPayment.payments.ToList<payment>();
-            List<String> listposition = employees.Select(p => p.Position).Distinct().ToList();
-
-            return listposition;
-        }
     }
 }

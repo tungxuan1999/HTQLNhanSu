@@ -25,6 +25,20 @@ namespace Client
 
         private void button1_Click(object sender, EventArgs e)
         {
+            LoginAccount();
+        }
+
+        public void CheckLogout(bool check)
+        {
+            if (check)
+            {
+                MessageBox.Show("Tài khoản đang đăng nhập ở nơi khác");
+                Application.Exit();
+            }
+        }
+
+        private void LoginAccount()
+        {
             String token = new AccountBUS().LoginAccount(new AccountBUS.Account(textBox1.Text, textBox2.Text));
             if (token != "")
             {
@@ -38,13 +52,19 @@ namespace Client
             }
         }
 
-        public void CheckLogout(bool check)
+        private void textBox2_KeyDown(object sender, KeyEventArgs e)
         {
-            if (check)
+            if(e.KeyCode == Keys.Enter)
             {
-                MessageBox.Show("Tài khoản đang đăng nhập ở nơi khác");
-                Application.Exit();
+                LoginAccount();
             }
+        }
+
+        private void Login_Load(object sender, EventArgs e)
+        {
+            textBox2.Text = "";
+            textBox2.PasswordChar = '*';
+            textBox2.MaxLength = 14;
         }
     }
 }

@@ -125,13 +125,24 @@ namespace HTQLNhanSu.DAL
 
         public Key GetKey()
         {
-            db.ObjectTrackingEnabled = false;
             Key key = new Key();
 
-            List<employee> employees = db.employees.ToList<employee>();
+            key.LISTposition = new List<string>();
+            key.LISTposition.Add("ADMIN");
+            key.LISTposition.Add("Giám đốc");
+            key.LISTposition.Add("Phó giám đốc");
+            key.LISTposition.Add("Thư ký");
+            key.LISTposition.Add("Trưởng phòng");
+            key.LISTposition.Add("Phó phòng");
+            key.LISTposition.Add("Nhân viên");
 
-            key.LISTdepartment = employees.Select(p => p.Department).Distinct().ToList();
-            key.LISTposition = employees.Select(p => p.Position).Distinct().ToList();
+            key.LISTdepartment = new List<string>();
+            key.LISTdepartment.Add("Ban quản lý");
+            key.LISTdepartment.Add("Ban giám đốc");
+            key.LISTdepartment.Add("Ban kế toán");
+            key.LISTdepartment.Add("Ban kĩ thuật");
+            key.LISTdepartment.Add("Ban marketing");
+            key.LISTdepartment.Add("Ban sản xuất");
 
             return key;
         }

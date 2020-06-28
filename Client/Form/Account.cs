@@ -91,13 +91,12 @@ namespace Client
             bool result = accountBUS.Insert(new AccountBUS.TokenChange(newAccount, DataStatic.user, DataStatic.token));
             if (result)
             {
-                MessageBox.Show("Registration Success");
+                MessageBox.Show("Đăng ký thành công");
                 DataGridViewChanged();
             }
             else
             {
-                MessageBox.Show("Registration Fail");
-                DataGridViewChanged();
+                MessageBox.Show("Đăng ký thất bại");
             }
         }
 
@@ -113,19 +112,18 @@ namespace Client
             bool result = accountBUS.Update(new AccountBUS.TokenChange(updateAccount, DataStatic.user, DataStatic.token));
             if (result)
             {
-                MessageBox.Show("Update Success");
+                MessageBox.Show("Cập nhật thành công");
                 DataGridViewChanged();
             }
             else
             {
-                MessageBox.Show("Update Fail");
-                DataGridViewChanged();
+                MessageBox.Show("Cập nhật thất bại");
             }
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("Are you sure?", "Delete?", MessageBoxButtons.YesNo);
+            DialogResult dialogResult = MessageBox.Show("Bạn có chắc xóa không", "Xóa?", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
                 AccountBUS.USERLOGIN deleteAccount = new AccountBUS.USERLOGIN()
@@ -138,18 +136,13 @@ namespace Client
                 bool result = accountBUS.Delete(new AccountBUS.TokenChange(deleteAccount, DataStatic.user, DataStatic.token));
                 if (result)
                 {
-                    MessageBox.Show("Delete Account Success");
+                    MessageBox.Show("Xóa thành công");
                     DataGridViewChanged();
                 }
                 else
                 {
-                    MessageBox.Show("Delete Fail");
-                    DataGridViewChanged();
+                    MessageBox.Show("Xóa thất bại");
                 }
-            }
-            else
-            {
-                DataGridViewChanged();
             }
         }
     }
