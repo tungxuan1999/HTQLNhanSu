@@ -2,10 +2,12 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Client.BL
 {
@@ -57,7 +59,7 @@ namespace Client.BL
             client.Headers[HttpRequestHeader.ContentType] = "application/json";
             client.Headers.Add(HttpRequestHeader.AcceptCharset, "utf-8");
             client.Encoding = Encoding.UTF8;
-            String response = client.DownloadString(new Uri(URL + "api/manage?user=" + user + "&token=" + token+"&keyword="+keyword));
+            String response = client.DownloadString(new Uri(URL + "api/manage?user=" + user + "&token=" + token + "&keyword=" + keyword));
             return JsonConvert.DeserializeObject<List<Employee>>(response);
         }
 
@@ -69,11 +71,11 @@ namespace Client.BL
             client.Headers[HttpRequestHeader.ContentType] = "application/json";
             client.Headers.Add(HttpRequestHeader.AcceptCharset, "utf-8");
             client.Encoding = Encoding.UTF8;
-            String response = client.DownloadString(new Uri(URL + "api/manage?user=" + user + "&token=" + token+"&department="+department));
+            String response = client.DownloadString(new Uri(URL + "api/manage?user=" + user + "&token=" + token + "&department=" + department));
             return JsonConvert.DeserializeObject<List<Employee>>(response);
         }
 
-        public List<Employee> SelectByDepartmentName(String user, String token,String department, String keyword)
+        public List<Employee> SelectByDepartmentName(String user, String token, String department, String keyword)
         {
             WebClient client = new WebClient();
 
@@ -81,7 +83,7 @@ namespace Client.BL
             client.Headers[HttpRequestHeader.ContentType] = "application/json";
             client.Headers.Add(HttpRequestHeader.AcceptCharset, "utf-8");
             client.Encoding = Encoding.UTF8;
-            String response = client.DownloadString(new Uri(URL + "api/manage?user=" + user + "&token=" + token + "&department=" + department+"&keyword="+keyword));
+            String response = client.DownloadString(new Uri(URL + "api/manage?user=" + user + "&token=" + token + "&department=" + department + "&keyword=" + keyword));
             return JsonConvert.DeserializeObject<List<Employee>>(response);
         }
 
@@ -92,7 +94,9 @@ namespace Client.BL
             /* GetSelectByName_HttpGet */
             String data = JsonConvert.SerializeObject(f);
             client.Headers[HttpRequestHeader.ContentType] = "application/json";
-            String response = client.UploadString(new Uri(URL+"api/manage"), "POST", data);
+            client.Headers.Add(HttpRequestHeader.AcceptCharset, "utf-8");
+            client.Encoding = Encoding.UTF8;
+            String response = client.UploadString(new Uri(URL + "api/manage"), "POST", data);
             return Boolean.Parse(response);
         }
 
@@ -103,6 +107,8 @@ namespace Client.BL
             /* GetSelectByName_HttpGet */
             String data = JsonConvert.SerializeObject(f);
             client.Headers[HttpRequestHeader.ContentType] = "application/json";
+            client.Headers.Add(HttpRequestHeader.AcceptCharset, "utf-8");
+            client.Encoding = Encoding.UTF8;
             String response = client.UploadString(new Uri(URL + "api/manage"), "PUT", data);
             return Boolean.Parse(response);
         }
@@ -114,9 +120,12 @@ namespace Client.BL
             /* GetSelectByName_HttpGet */
             String data = JsonConvert.SerializeObject(f);
             client.Headers[HttpRequestHeader.ContentType] = "application/json";
+            client.Headers.Add(HttpRequestHeader.AcceptCharset, "utf-8");
+            client.Encoding = Encoding.UTF8;
             String response = client.UploadString(new Uri(URL + "api/manage"), "DELETE", data);
             return Boolean.Parse(response);
         }
+
 
         public class Key
         {
@@ -138,6 +147,16 @@ namespace Client.BL
             public String Email { get; set; }
             public String Position { get; set; }
             public String Department { get; set; }
+
+            public Employee(string iD, string name, string address, string email, string position, string department)
+            {
+                ID = iD;
+                Name = name;
+                Address = address;
+                Email = email;
+                Position = position;
+                Department = department;
+            }
         }
 
         public class FilePut

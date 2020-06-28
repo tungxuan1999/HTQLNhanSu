@@ -85,6 +85,20 @@ namespace Client.BL
             return JsonConvert.DeserializeObject<List<payment>>(response);
         }
 
+        //public bool Update...
+        public bool Update(FilePut f)
+        {
+            WebClient client = new WebClient();
+
+            /* GetSelectByName_HttpGet */
+            String data = JsonConvert.SerializeObject(f);
+            client.Headers[HttpRequestHeader.ContentType] = "application/json";
+            client.Headers.Add(HttpRequestHeader.AcceptCharset, "utf-8");
+            client.Encoding = Encoding.UTF8;
+            String response = client.UploadString(new Uri(URL + "api/payment"), "PUT", data);
+            return Boolean.Parse(response);
+        }
+
         public class salary
         {
             public String Position { get; set; }
@@ -102,6 +116,19 @@ namespace Client.BL
             public int Workingdays { get; set; }
             public int Bonus { get; set; }
             public int Salary { get; set; }
+        }
+
+        public class FilePut
+        {
+            public String USER { get; set; }
+            public String TOKEN { get; set; }
+            public payment payment { get; set; }
+            public FilePut(string uSER,string tOKEN,payment pAYMENT)
+            {
+                USER = uSER;
+                TOKEN = tOKEN;
+                payment = pAYMENT;
+            }
         }
     }
 }

@@ -14,10 +14,12 @@ namespace Client
 {
     public partial class Salary : Form
     {
+        SalaryBUS salaryBUS;
         List<String> listKey;
         public Salary()
         {
             InitializeComponent();
+            salaryBUS = new SalaryBUS();
         }
 
         private void Salary_Load(object sender, EventArgs e)
@@ -69,6 +71,46 @@ namespace Client
                 {
                     dataGridView1.DataSource = new SalaryBUS().SelectByPositionName(DataStatic.user, DataStatic.token, listKey[comboBox1.SelectedIndex], textBox1.Text);
                 }
+            }
+            ShowDetail();
+        }
+
+        private void ShowDetail()
+        {
+            textBox2.DataBindings.Clear();
+            textBox2.DataBindings.Add(new Binding("Text", dataGridView1.DataSource, "ID", true, DataSourceUpdateMode.Never));
+            textBox3.DataBindings.Clear();
+            textBox3.DataBindings.Add(new Binding("Text", dataGridView1.DataSource, "Name", true, DataSourceUpdateMode.Never));
+            textBox4.DataBindings.Clear();
+            textBox4.DataBindings.Add(new Binding("Text", dataGridView1.DataSource, "Position", true, DataSourceUpdateMode.Never));
+            textBox5.DataBindings.Clear();
+            textBox5.DataBindings.Add(new Binding("Text", dataGridView1.DataSource, "Workingdays", true, DataSourceUpdateMode.Never));
+            textBox6.DataBindings.Clear();
+            textBox6.DataBindings.Add(new Binding("Text", dataGridView1.DataSource, "Bonus", true, DataSourceUpdateMode.Never));
+            textBox7.DataBindings.Clear();
+            textBox7.DataBindings.Add(new Binding("Text", dataGridView1.DataSource, "Salary", true, DataSourceUpdateMode.Never));
+        }
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            SalaryBUS.payment updateSalary = new SalaryBUS.payment()
+            {
+                ID = textBox2.Text,
+                Name=textBox3.Text,
+                Position=textBox4.Text,
+                Workingdays=int.Parse(textBox5.Text),
+                Bonus=int.Parse(textBox6.Text),
+                Salary=int.Parse(textBox7.Text)        
+            };
+            bool result = salaryBUS.Update(new SalaryBUS.FilePut(DataStatic.user, DataStatic.token, updateSalary));
+            if(result)
+            {
+                MessageBox.Show("Update Salary Success");
+                ChangedDataGridView();
+            }
+            else
+            {
+                MessageBox.Show("Update Salary Success");
+                ChangedDataGridView();
             }
         }
     }

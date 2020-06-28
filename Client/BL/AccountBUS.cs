@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Client.BL
 {
@@ -91,6 +92,8 @@ namespace Client.BL
             /* GetSelectByName_HttpGet */
             String data = JsonConvert.SerializeObject(f);
             client.Headers[HttpRequestHeader.ContentType] = "application/json";
+            client.Headers.Add(HttpRequestHeader.AcceptCharset, "utf-8");
+            client.Encoding = Encoding.UTF8;
             String response = client.UploadString(new Uri(URL + "api/account"), "POST", data);
             return Boolean.Parse(response);
         }
@@ -102,6 +105,8 @@ namespace Client.BL
             /* GetSelectByName_HttpGet */
             String data = JsonConvert.SerializeObject(f);
             client.Headers[HttpRequestHeader.ContentType] = "application/json";
+            client.Headers.Add(HttpRequestHeader.AcceptCharset, "utf-8");
+            client.Encoding = Encoding.UTF8;
             String response = client.UploadString(new Uri(URL + "api/account"), "PUT", data);
             return Boolean.Parse(response);
         }
@@ -113,6 +118,8 @@ namespace Client.BL
             /* GetSelectByName_HttpGet */
             String data = JsonConvert.SerializeObject(f);
             client.Headers[HttpRequestHeader.ContentType] = "application/json";
+            client.Headers.Add(HttpRequestHeader.AcceptCharset, "utf-8");
+            client.Encoding = Encoding.UTF8;
             String response = client.UploadString(new Uri(URL + "api/account"), "DELETE", data);
             return Boolean.Parse(response);
         }
@@ -140,15 +147,22 @@ namespace Client.BL
         {
             public String ID { get; set; }
             public String username { get; set; }
-            public String permisstion { get; set; }
             public String password { get; set; }
-        }
+            public String permission { get; set; }
+            
 
+        }
         public class TokenChange
         {
             public USERLOGIN user { get; set; }
             public String username { get; set; }
             public String token { get; set; }
+            public TokenChange(USERLOGIN uSER,string uSERNAME, string tOKEN)
+            {
+                user = uSER;
+                username = uSERNAME;
+                token = tOKEN;
+            }
         }
     }
 }

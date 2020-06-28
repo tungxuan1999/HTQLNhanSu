@@ -1,11 +1,14 @@
 ﻿using Client.BL;
 using Client.Data;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,6 +19,7 @@ namespace Client
     {
         DepartmentBUS departmentBUS;
         DepartmentBUS.Key key;
+
         public Department()
         {
             InitializeComponent();
@@ -32,6 +36,7 @@ namespace Client
 
             comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox1.DataSource = listKey;
+            ShowDetail();
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -63,11 +68,84 @@ namespace Client
                     dataGridView1.DataSource = departmentBUS.SelectByDepartmentName(DataStatic.user, DataStatic.token, key.LISTdepartment[comboBox1.SelectedIndex - 1], textBox1.Text);
                 }
             }
+            ShowDetail();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             ChangeDataGridView();
         }
+
+        private void ShowDetail()
+        {
+            textBox2.DataBindings.Clear();
+            textBox2.DataBindings.Add(new Binding("Text", dataGridView1.DataSource, "ID", true, DataSourceUpdateMode.Never));
+            textBox3.DataBindings.Clear();
+            textBox3.DataBindings.Add(new Binding("Text", dataGridView1.DataSource, "Name", true, DataSourceUpdateMode.Never));
+            textBox4.DataBindings.Clear();
+            textBox4.DataBindings.Add(new Binding("Text", dataGridView1.DataSource, "Address", true, DataSourceUpdateMode.Never));
+            textBox5.DataBindings.Clear();
+            textBox5.DataBindings.Add(new Binding("Text", dataGridView1.DataSource, "Email", true, DataSourceUpdateMode.Never));
+            textBox6.DataBindings.Clear();
+            textBox6.DataBindings.Add(new Binding("Text", dataGridView1.DataSource, "Position", true, DataSourceUpdateMode.Never));
+            textBox7.DataBindings.Clear();
+            textBox7.DataBindings.Add(new Binding("Text", dataGridView1.DataSource, "Department", true, DataSourceUpdateMode.Never));
+        }
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            DepartmentBUS.Employee newEmployee = new DepartmentBUS.Employee(textBox2.Text,textBox3.Text,textBox4.Text,textBox5.Text,textBox6.Text,textBox7.Text);
+            bool result = departmentBUS.Insert(new DepartmentBUS.FilePut(newEmployee, DataStatic.user, DataStatic.token));
+            if (result)
+            {
+                MessageBox.Show("Add Success");
+                ChangeDataGridView();
+            }
+            else
+            {
+                MessageBox.Show("Add Fail");
+                ChangeDataGridView();
+            }
+        }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            DepartmentBUS.Employee updateEmployee = new DepartmentBUS.Employee(textBox2.Text, textBox3.Text, textBox4.Text, textBox5.Text, textBox6.Text, textBox7.Text);
+            bool result = departmentBUS.Update(new DepartmentBUS.FilePut(updateEmployee, DataStatic.user, DataStatic.token));
+            if (result)
+            {
+                MessageBox.Show("Update Success");
+                ChangeDataGridView();
+            }
+            else
+            {
+                MessageBox.Show("Update Fail");
+                ChangeDataGridView();
+            }
+        }
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Are you sure?", "Delete?", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                DepartmentBUS.Employee deleteEmployee = new DepartmentBUS.Employee(textBox2.Text, textBox3.Text, textBox4.Text, textBox5.Text, textBox6.Text, textBox7.Text);
+                bool result = departmentBUS.Delete(new DepartmentBUS.FilePut(deleteEmployee, DataStatic.user, DataStatic.token));
+                if (result)
+                {
+                    MessageBox.Show("Delete Success");
+                    ChangeDataGridView();
+                }
+                else
+                {
+                    MessageBox.Show("Delete Fail");
+                    ChangeDataGridView();
+                }
+            }
+            else
+            {
+                ChangeDataGridView();
+            }
+        }
+
+        
     }
 }
