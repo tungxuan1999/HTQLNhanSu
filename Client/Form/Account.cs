@@ -76,8 +76,8 @@ namespace Client
             textBox2.DataBindings.Add(new Binding("Text", dataGridView1.DataSource, "ID", true, DataSourceUpdateMode.Never));
             textBox3.DataBindings.Clear();
             textBox3.DataBindings.Add(new Binding("Text", dataGridView1.DataSource, "username", true, DataSourceUpdateMode.Never));
-            textBox5.DataBindings.Clear();
-            textBox5.DataBindings.Add(new Binding("Text", dataGridView1.DataSource, "permisstion", true, DataSourceUpdateMode.Never));
+            comboBox2.DataBindings.Clear();
+            comboBox2.DataBindings.Add(new Binding("Text", dataGridView1.DataSource, "permisstion", true, DataSourceUpdateMode.Never));
         }
         private void button1_Click(object sender, EventArgs e)
         {
@@ -86,7 +86,7 @@ namespace Client
                 ID=textBox2.Text,
                 username=textBox3.Text,
                 password=textBox4.Text,
-                permission = textBox5.Text
+                permission = comboBox2.Text.ToString()
             };
             bool result = accountBUS.Insert(new AccountBUS.TokenChange(newAccount, DataStatic.user, DataStatic.token));
             if (result)
@@ -102,23 +102,27 @@ namespace Client
 
         private void button2_Click(object sender, EventArgs e)
         {
-            AccountBUS.USERLOGIN updateAccount = new AccountBUS.USERLOGIN()
-            {
-                ID = textBox2.Text,
-                username = textBox3.Text,
-                password = textBox4.Text,
-                permission = textBox5.Text
-            };
-            bool result = accountBUS.Update(new AccountBUS.TokenChange(updateAccount, DataStatic.user, DataStatic.token));
-            if (result)
-            {
-                MessageBox.Show("Cập nhật thành công");
-                DataGridViewChanged();
+            try {
+                AccountBUS.USERLOGIN updateAccount = new AccountBUS.USERLOGIN()
+                {
+                    ID = textBox2.Text,
+                    username = textBox3.Text,
+                    password = textBox4.Text,
+                    permission = comboBox2.Text.ToString()
+                };
+                bool result = accountBUS.Update(new AccountBUS.TokenChange(updateAccount, DataStatic.user, DataStatic.token));
+                if (result)
+                {
+                    MessageBox.Show("Cập nhật thành công");
+                    DataGridViewChanged();
+                }
+                else
+                {
+                    MessageBox.Show("Cập nhật thất bại");
+                }
             }
-            else
-            {
-                MessageBox.Show("Cập nhật thất bại");
-            }
+            catch { MessageBox.Show("User name không thể thay đổi"); }
+
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -131,7 +135,7 @@ namespace Client
                     ID = textBox2.Text,
                     username = textBox3.Text,
                     password = textBox4.Text,
-                    permission = textBox5.Text
+                    permission = comboBox2.Text.ToString()
                 };
                 bool result = accountBUS.Delete(new AccountBUS.TokenChange(deleteAccount, DataStatic.user, DataStatic.token));
                 if (result)

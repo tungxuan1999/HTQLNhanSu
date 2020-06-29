@@ -66,5 +66,6 @@ namespace Client
             textBox2.PasswordChar = '*';
             textBox2.MaxLength = 14;
         }
+
     }
 }

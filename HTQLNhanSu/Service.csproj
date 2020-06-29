@@ -175,6 +175,8 @@
       <DependentUpon>DataPayment.dbml</DependentUpon>
     </None>
     <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\demohtqlnhansu - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\demohtqlnhansu - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
