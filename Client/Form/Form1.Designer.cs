@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.btnAttendance = new System.Windows.Forms.Button();
             this.btnTaiKhoan = new System.Windows.Forms.Button();
             this.btnSalary = new System.Windows.Forms.Button();
@@ -36,10 +37,10 @@
             // 
             // btnAttendance
             // 
-            this.btnAttendance.Location = new System.Drawing.Point(233, 107);
-            this.btnAttendance.Margin = new System.Windows.Forms.Padding(2);
+            this.btnAttendance.Location = new System.Drawing.Point(311, 132);
+            this.btnAttendance.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnAttendance.Name = "btnAttendance";
-            this.btnAttendance.Size = new System.Drawing.Size(130, 45);
+            this.btnAttendance.Size = new System.Drawing.Size(173, 55);
             this.btnAttendance.TabIndex = 3;
             this.btnAttendance.Text = "Lịch sử sử dụng";
             this.btnAttendance.UseVisualStyleBackColor = true;
@@ -47,10 +48,10 @@
             // 
             // btnTaiKhoan
             // 
-            this.btnTaiKhoan.Location = new System.Drawing.Point(233, 33);
-            this.btnTaiKhoan.Margin = new System.Windows.Forms.Padding(2);
+            this.btnTaiKhoan.Location = new System.Drawing.Point(311, 41);
+            this.btnTaiKhoan.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnTaiKhoan.Name = "btnTaiKhoan";
-            this.btnTaiKhoan.Size = new System.Drawing.Size(130, 45);
+            this.btnTaiKhoan.Size = new System.Drawing.Size(173, 55);
             this.btnTaiKhoan.TabIndex = 1;
             this.btnTaiKhoan.Text = "Quản lý tài khoản";
             this.btnTaiKhoan.UseVisualStyleBackColor = true;
@@ -58,10 +59,10 @@
             // 
             // btnSalary
             // 
-            this.btnSalary.Location = new System.Drawing.Point(41, 107);
-            this.btnSalary.Margin = new System.Windows.Forms.Padding(2);
+            this.btnSalary.Location = new System.Drawing.Point(55, 132);
+            this.btnSalary.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnSalary.Name = "btnSalary";
-            this.btnSalary.Size = new System.Drawing.Size(130, 45);
+            this.btnSalary.Size = new System.Drawing.Size(173, 55);
             this.btnSalary.TabIndex = 2;
             this.btnSalary.Text = "Quản lý lương";
             this.btnSalary.UseVisualStyleBackColor = true;
@@ -69,10 +70,10 @@
             // 
             // btnBoPhan
             // 
-            this.btnBoPhan.Location = new System.Drawing.Point(41, 33);
-            this.btnBoPhan.Margin = new System.Windows.Forms.Padding(2);
+            this.btnBoPhan.Location = new System.Drawing.Point(55, 41);
+            this.btnBoPhan.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnBoPhan.Name = "btnBoPhan";
-            this.btnBoPhan.Size = new System.Drawing.Size(130, 45);
+            this.btnBoPhan.Size = new System.Drawing.Size(173, 55);
             this.btnBoPhan.TabIndex = 0;
             this.btnBoPhan.Text = "Quản lý nhân viên";
             this.btnBoPhan.UseVisualStyleBackColor = true;
@@ -80,13 +81,15 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(426, 193);
+            this.ClientSize = new System.Drawing.Size(568, 238);
             this.Controls.Add(this.btnAttendance);
             this.Controls.Add(this.btnTaiKhoan);
             this.Controls.Add(this.btnSalary);
             this.Controls.Add(this.btnBoPhan);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Form1";
             this.Text = "Hệ thống quản lý nhân sự";
             this.Load += new System.EventHandler(this.Form1_Load);

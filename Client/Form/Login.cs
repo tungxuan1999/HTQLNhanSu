@@ -50,6 +50,10 @@ namespace Client
                 f.ShowDialog();
                 Close();
             }
+            else
+            {
+                MessageBox.Show("Đăng nhập thất bại");
+            }
         }
 
         private void textBox2_KeyDown(object sender, KeyEventArgs e)
