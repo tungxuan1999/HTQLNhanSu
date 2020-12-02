@@ -19,12 +19,13 @@ namespace Client.BL
         static IFirebaseConfig config = new FirebaseConfig { BasePath = FIREBASE_APP };
         static FirebaseClient client = new FirebaseClient(config);
 
+
         public async void ListenFirebaseToken()
         {
-            EventStreamResponse response = await client.OnAsync("user",
+            EventStreamResponse response = await client.OnAsync("user/" + DataStatic.user,
 
                 changed: (sender, args, context) => { CheckToken(); });
-                
+
         }
 
         private void CheckToken()
@@ -44,21 +45,21 @@ namespace Client.BL
 
         public Object GetHistoy(String user)
         {
-            FirebaseResponse response = client.Get("history/"+user);
+            FirebaseResponse response = client.Get("history/" + user);
             Object token = response.ResultAs<Object>();
             return token;
         }
 
         public Object GetHistoyDate(String user, String date)
         {
-            FirebaseResponse response = client.Get("history/" + user+"/"+date);
+            FirebaseResponse response = client.Get("history/" + user + "/" + date);
             Object token = response.ResultAs<Object>();
-            if(token == null)
+            if (token == null)
             {
                 return new Object();
-            }    
+            }
             else
-            return token;
+                return token;
         }
     }
 }

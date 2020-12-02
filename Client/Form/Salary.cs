@@ -12,8 +12,9 @@ using System.Windows.Forms;
 
 namespace Client
 {
-    public partial class Salary : Form
+    public partial class Salary : Form, Profile.ProfileClosing
     {
+        Profile profile;
         SalaryBUS salaryBUS;
         List<String> listKey;
         public Salary()
@@ -95,14 +96,14 @@ namespace Client
             SalaryBUS.payment updateSalary = new SalaryBUS.payment()
             {
                 ID = textBox2.Text,
-                Name=textBox3.Text,
-                Position=textBox4.Text,
-                Workingdays=int.Parse(textBox5.Text),
-                Bonus=int.Parse(textBox6.Text),
-                Salary=int.Parse(textBox7.Text)        
+                Name = textBox3.Text,
+                Position = textBox4.Text,
+                Workingdays = int.Parse(textBox5.Text),
+                Bonus = int.Parse(textBox6.Text),
+                Salary = int.Parse(textBox7.Text)
             };
             bool result = salaryBUS.Update(new SalaryBUS.FilePut(DataStatic.user, DataStatic.token, updateSalary));
-            if(result)
+            if (result)
             {
                 MessageBox.Show("Cập nhật thành công");
                 ChangedDataGridView();
@@ -110,6 +111,31 @@ namespace Client
             else
             {
                 MessageBox.Show("Cập nhật thất bại");
+            }
+        }
+
+        private void btProfile_Click(object sender, EventArgs e)
+        {
+            if (profile == null)
+            {
+                profile = new Profile(this);
+                //profile.StartPosition = FormStartPosition.CenterParent;
+                profile.Show();
+                profile.Location = new Point(this.Left + this.Width, this.Top);
+            }
+        }
+
+        private void Salary_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (profile != null)
+                profile.Close();
+        }
+
+        public void CheckClosing(bool check)
+        {
+            if(check)
+            {
+                profile = null;
             }
         }
     }

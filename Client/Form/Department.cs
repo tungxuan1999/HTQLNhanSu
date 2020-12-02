@@ -15,10 +15,11 @@ using System.Windows.Forms;
 
 namespace Client
 {
-    public partial class Department : Form
+    public partial class Department : Form, Profile.ProfileClosing
     {
         DepartmentBUS departmentBUS;
         DepartmentBUS.Key key;
+        Profile profile;
 
         public Department()
         {
@@ -93,7 +94,7 @@ namespace Client
         }
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            DepartmentBUS.Employee newEmployee = new DepartmentBUS.Employee(textBox2.Text,textBox3.Text,textBox4.Text,textBox5.Text,comboBox2.Text.ToString(),comboBox3.Text.ToString());
+            DepartmentBUS.Employee newEmployee = new DepartmentBUS.Employee(textBox2.Text, textBox3.Text, textBox4.Text, textBox5.Text, comboBox2.Text.ToString(), comboBox3.Text.ToString());
             bool result = departmentBUS.Insert(new DepartmentBUS.FilePut(newEmployee, DataStatic.user, DataStatic.token));
             if (result)
             {
@@ -143,6 +144,29 @@ namespace Client
             }
         }
 
-        
+        private void btProfile_Click(object sender, EventArgs e)
+        {
+            if (profile == null)
+            {
+                profile = new Profile(this);
+                //profile.StartPosition = FormStartPosition.CenterParent;
+                profile.Show();
+                profile.Location = new Point(this.Left + this.Width, this.Top);
+            }
+        }
+
+        private void Department_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (profile != null)
+                profile.Close();
+        }
+
+        public void CheckClosing(bool check)
+        {
+            if(check)
+            {
+                profile = null;
+            }
+        }
     }
 }

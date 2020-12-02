@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 
 namespace HTQLNhanSu.DAL
@@ -28,6 +29,7 @@ namespace HTQLNhanSu.DAL
         {
             try
             {
+                login.password = CreateMD5(login.password);
                 db.user_logins.InsertOnSubmit(login);
                 db.SubmitChanges();
                 return true;
@@ -47,7 +49,7 @@ namespace HTQLNhanSu.DAL
                 {
                     data.ID = login.ID;
                     data.username = login.username;
-                    data.password = data.password;
+                    data.password = CreateMD5(login.password);
                     data.permission = login.permission;
                     db.SubmitChanges();
                     return true;
@@ -153,9 +155,9 @@ namespace HTQLNhanSu.DAL
         {
             db.ObjectTrackingEnabled = false;
             List<user_login> users;
-
+            String passHash = CreateMD5(pass);
             users = (from p in db.user_logins
-                     where p.username == user && p.password == pass
+                     where p.username == user && p.password == passHash
                      select p).ToList();
 
             if (users.Count > 0) return true;
@@ -198,6 +200,24 @@ namespace HTQLNhanSu.DAL
             public String ID { get; set; }
             public String USERNAME { get; set; }
             public String PERMISSTION { get; set; }
+        }
+
+        public string CreateMD5(string input)
+        {
+            // Use input string to calculate MD5 hash
+            using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
+            {
+                byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
+                byte[] hashBytes = md5.ComputeHash(inputBytes);
+
+                // Convert the byte array to hexadecimal string
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < hashBytes.Length; i++)
+                {
+                    sb.Append(hashBytes[i].ToString("X2"));
+                }
+                return sb.ToString();
+            }
         }
     }
 }
