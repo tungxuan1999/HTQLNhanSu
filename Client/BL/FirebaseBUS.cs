@@ -16,7 +16,8 @@ namespace Client.BL
     class FirebaseBUS
     {
         private const String FIREBASE_APP = DataStatic.urlFirebase;
-        static IFirebaseConfig config = new FirebaseConfig { BasePath = FIREBASE_APP };
+        private const String FIREBASE_AUTH = DataStatic.authFirebase;
+        static IFirebaseConfig config = new FirebaseConfig { BasePath = FIREBASE_APP, AuthSecret = FIREBASE_AUTH };
         static FirebaseClient client = new FirebaseClient(config);
 
 

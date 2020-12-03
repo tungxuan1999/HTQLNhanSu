@@ -12,7 +12,8 @@ namespace HTQLNhanSu.DAL
     public class LoginDAOFirebase
     {
         private const String FIREBASE_APP = "https://tiger-group-791db.firebaseio.com/";
-        static IFirebaseConfig config = new FirebaseConfig { BasePath = FIREBASE_APP };
+        private const String FIREBASE_AUTH = "efqu4diGzBOXC6Ss6ydJfoUctB1OPaCcXYqZavYi";
+        static IFirebaseConfig config = new FirebaseConfig { BasePath = FIREBASE_APP, AuthSecret = FIREBASE_AUTH };
         static FirebaseClient client = new FirebaseClient(config);
 
         public bool LoginToken(String newAnimal, String token)
