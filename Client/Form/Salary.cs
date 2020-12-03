@@ -118,10 +118,17 @@ namespace Client
         {
             if (profile == null)
             {
-                profile = new Profile(this);
-                //profile.StartPosition = FormStartPosition.CenterParent;
-                profile.Show();
-                profile.Location = new Point(this.Left + this.Width, this.Top);
+                if (textBox2.Text != "")
+                {
+                    profile = new Profile(this, textBox2.Text);
+                    //profile.StartPosition = FormStartPosition.CenterParent;
+                    profile.Show();
+                    profile.Location = new Point(this.Left + this.Width, this.Top);
+                }
+                else
+                {
+                    MessageBox.Show("Vui lòng chọn item");
+                }
             }
         }
 

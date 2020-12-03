@@ -16,7 +16,7 @@ namespace HTQLNhanSu.BUS
             {
                 String token = getRandomToken();
                 new LoginDAOFirebase().LoginToken(user, token);
-                if(token != "")
+                if (token != "")
                 {
                     new LoginDAOFirebase().History(user, "Đăng nhập thành công");
                 }
@@ -153,6 +153,36 @@ namespace HTQLNhanSu.BUS
                 new LoginDAOFirebase().History(username, "Xóa thất bại tài khoản " + user.username);
                 return false;
             }
+        }
+
+        public String GetImage(String user, String token, String id)
+        {
+            if (new LoginDAOFirebase().CheckToken(user, token))
+            {
+                if (new LoginDAOSQL().CheckPermission(user) > 2)
+                {
+                    return new LoginDAOFirebase().GetImage(id); ;
+                }
+                else return "";
+            }
+            else
+                return "";
+        }
+
+        public String PostImage(String user, String token, String imagebitmap, String id)
+        {
+            if (new LoginDAOFirebase().CheckToken(user, token))
+            {
+                if (new LoginDAOSQL().CheckPermission(user) > 2)
+                {
+                    if (new LoginDAOFirebase().PostImage(imagebitmap, id))
+                        return "Upload hình thành công";
+                    else return "Upload hình thất bại";
+                }
+                else return "Không có quyền truy cập";
+            }
+            else
+                return "Upload hình thất bại sai token";
         }
 
         string getRandomToken()

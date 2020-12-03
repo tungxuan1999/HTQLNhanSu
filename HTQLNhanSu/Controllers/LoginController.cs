@@ -81,6 +81,20 @@ namespace HTQLNhanSu.Controllers
             return Json(new LoginBUS().DeleteAccount(tokenChange.user, tokenChange.username, tokenChange.token));
         }
 
+        [HttpPost]
+        [Route("api/getimage")]
+        public IHttpActionResult GetImage(ImageChange imageChange)
+        {
+            return Json(new LoginBUS().GetImage(imageChange.username, imageChange.token, imageChange.id));
+        }
+
+        [HttpPost]
+        [Route("api/postimage")]
+        public IHttpActionResult PostImage(ImageChange imageChange)
+        {
+            return Json(new LoginBUS().PostImage(imageChange.username,imageChange.token,imageChange.imagebitmap,imageChange.id));
+        }
+
         public class Account
         {
             public String USER { get; set; }
@@ -92,6 +106,14 @@ namespace HTQLNhanSu.Controllers
             public user_login user { get; set; }
             public String username { get; set; }
             public String token { get; set; }
+        }
+
+        public class ImageChange
+        {
+            public String username { get; set; }
+            public String token { get; set; }
+            public String imagebitmap { get; set; }
+            public String id { get; set; }
         }
     }
 }

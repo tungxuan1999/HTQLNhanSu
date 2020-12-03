@@ -124,6 +124,32 @@ namespace Client.BL
             return Boolean.Parse(response);
         }
 
+        public String GetImage(ImageChange imageChange)
+        {
+            WebClient client = new WebClient();
+
+            /* GetSelectByName_HttpGet */
+            String data = JsonConvert.SerializeObject(imageChange);
+            client.Headers[HttpRequestHeader.ContentType] = "application/json";
+            client.Headers.Add(HttpRequestHeader.AcceptCharset, "utf-8");
+            client.Encoding = Encoding.UTF8;
+            String response = client.UploadString(new Uri(URL + "api/getimage"), "POST", data);
+            return response;
+        }
+
+        public String PostImage(ImageChange imageChange)
+        {
+            WebClient client = new WebClient();
+
+            /* GetSelectByName_HttpGet */
+            String data = JsonConvert.SerializeObject(imageChange);
+            client.Headers[HttpRequestHeader.ContentType] = "application/json";
+            client.Headers.Add(HttpRequestHeader.AcceptCharset, "utf-8");
+            client.Encoding = Encoding.UTF8;
+            String response = client.UploadString(new Uri(URL + "api/postimage"), "POST", data);
+            return response;
+        }
+
         public class Account
         {
             public String USER { get; set; }
@@ -163,6 +189,14 @@ namespace Client.BL
                 username = uSERNAME;
                 token = tOKEN;
             }
+        }
+
+        public class ImageChange
+        {
+            public String username { get; set; }
+            public String token { get; set; }
+            public String imagebitmap { get; set; }
+            public String id { get; set; }
         }
     }
 }

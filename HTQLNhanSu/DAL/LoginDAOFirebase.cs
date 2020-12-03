@@ -54,5 +54,39 @@ namespace HTQLNhanSu.DAL
             }
             catch (Exception ex) { return false; }
         }
+
+        public String GetImage(String id)
+        {
+            try
+            {
+                FirebaseResponse response = client.Get("image/" + id);
+                String image = response.ResultAs<String>();
+                if(image != null)
+                return image;
+                else
+                {
+                    response = client.Get("image/" + "default");
+                    image = response.ResultAs<String>();
+                    return image;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public Boolean PostImage(String image, String id)
+        {
+            try
+            {
+                client.Set("image/" + id, image);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }
