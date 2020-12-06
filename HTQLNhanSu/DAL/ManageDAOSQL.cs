@@ -40,11 +40,27 @@ namespace HTQLNhanSu.DAL
                 if (data != null)
                 {
                     data.ID = login.ID;
-                    data.Address = login.Address;
+                    if (login.Address != null)
+                    {
+                        data.Address = login.Address;
+                    }
                     data.Department = data.Department;
-                    data.Email = login.Email;
+                    if (login.Email != null)
+                    {
+                        data.Email = login.Email;
+                    }
                     data.Position = login.Position;
                     data.Name = login.Name;
+                    if (login.Birthday != new DateTime())
+                    {
+                        data.Birthday = login.Birthday;
+                    }
+                    if (login.Image != null)
+                    {
+                        data.Image = login.Image;
+                    }
+                    if (login.Gender != null)
+                        data.Gender = login.Gender;
                     db.SubmitChanges();
                     return true;
                 }

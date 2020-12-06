@@ -18,9 +18,12 @@ namespace Client
     {
         FirebaseBUS firebaseBUS;
         String id;
+        List<String> genderlist;
+        DepartmentBUS.Employee employee;
         public interface ProfileClosing
         {
             void CheckClosing(bool check);
+            void CheckReset(bool check);
         }
         ProfileClosing profileClosing;
         public Profile(Form form, String id)
@@ -29,6 +32,11 @@ namespace Client
             profileClosing = (ProfileClosing)form;
             firebaseBUS = new FirebaseBUS();
             this.id = id;
+            genderlist = new List<string>();
+            genderlist.Add("Nam");
+            genderlist.Add("Nữ");
+            genderlist.Add("Khác");
+            comboBox2.DataSource = genderlist;
         }
 
         private void Profile_FormClosing(object sender, FormClosingEventArgs e)
@@ -73,19 +81,23 @@ namespace Client
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (pictureBox1.Image != null)
+            try
             {
-                MemoryStream ms = new MemoryStream();
-                pictureBox1.Image.Save(ms, ImageFormat.Jpeg);
+                if (pictureBox1.Image != null)
+                {
+                    MemoryStream ms = new MemoryStream();
+                    pictureBox1.Image.Save(ms, ImageFormat.Jpeg);
 
-                byte[] aa = ms.GetBuffer();
+                    byte[] aa = ms.GetBuffer();
 
-                String bb = Convert.ToBase64String(aa);
+                    String bb = Convert.ToBase64String(aa);
 
-                MessageBox.Show(new AccountBUS().PostImage(new AccountBUS.ImageChange { id = this.id, imagebitmap = bb, token = DataStatic.token, username = DataStatic.user }));
-                //firebaseBUS.UploadImage(bb, "default");
+                    MessageBox.Show(new AccountBUS().PostImage(new AccountBUS.ImageChange { id = this.id, imagebitmap = bb, token = DataStatic.token, username = DataStatic.user }));
+                    profileClosing.CheckReset(true);
+                    //firebaseBUS.UploadImage(bb, "default");
+                }
             }
-            else
+            catch
             {
                 MessageBox.Show("Vui lòng chọn hình ảnh");
             }
@@ -93,6 +105,21 @@ namespace Client
 
         private void Profile_Load(object sender, EventArgs e)
         {
+            employee = new DepartmentBUS().SelectByID(DataStatic.user, DataStatic.token, id);
+            if (employee != null)
+            {
+                textBox1.Text = employee.Name;
+                textBox2.Text = employee.Address;
+                textBox3.Text = employee.Email;
+                if (employee.Birthday != new DateTime())
+                    dateTimePicker1.Value = employee.Birthday;
+                comboBox2.SelectedItem = employee.Gender;
+            }
+            else
+            {
+                MessageBox.Show("Emplyee isn't exist");
+                this.Close();
+            }
             String imagebitmap = new AccountBUS().GetImage(new AccountBUS.ImageChange { id = this.id, imagebitmap = "", token = DataStatic.token, username = DataStatic.user });
             if (imagebitmap != null)
             {
@@ -105,6 +132,40 @@ namespace Client
                     pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
                 }
             }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if(CheckNull())
+            {
+                DepartmentBUS.Employee updateEmployee = new DepartmentBUS.Employee() { Address = textBox2.Text,Birthday = dateTimePicker1.Value, Department = employee.Department,Email = textBox3.Text,Gender = comboBox2.Text.ToString(),ID = employee.ID,Image = null,Name = employee.Name,Position=employee.Position};
+                bool result = new DepartmentBUS().Update(new DepartmentBUS.FilePut(updateEmployee, DataStatic.user, DataStatic.token));
+                if (result)
+                {
+                    MessageBox.Show("Cập nhật thành công");
+                    profileClosing.CheckReset(true);
+                }
+                else
+                {
+                    MessageBox.Show("Cập nhật thất bại");
+                }
+            }
+        }
+
+        bool CheckNull()
+        {
+            if(textBox2.Text == null)
+            {
+                MessageBox.Show("Address is null");
+                return false;
+            }
+
+            if (textBox3.Text == null)
+            {
+                MessageBox.Show("Email is null");
+                return false;
+            }
+            return true;
         }
     }
 }

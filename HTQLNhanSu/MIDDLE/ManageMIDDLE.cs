@@ -135,5 +135,56 @@ namespace HTQLNhanSu.BUS
             }
             else return new List<employee>();
         }
+
+        public String GetImage(String user, String token, String id)
+        {
+            if (new LoginDAOFirebase().CheckToken(user, token))
+            {
+                if (new LoginDAOSQL().CheckPermission(user) > 2)
+                {
+                    return new LoginDAOFirebase().GetImage(id);
+                }
+                else return "";
+            }
+            else
+                return "";
+        }
+
+        public String PostImage(String user, String token, String imagebitmap, String id)
+        {
+            if (new LoginDAOFirebase().CheckToken(user, token))
+            {
+                if (new LoginDAOSQL().CheckPermission(user) > 2)
+                {
+                    if (new LoginDAOFirebase().PostImage(imagebitmap, id))
+                    {
+                        new LoginDAOFirebase().History(user, "Upload image " + id + " success");
+                        employee employee = new ManageDAOSQL().SelectByID(id);
+                        employee.Image = "Yes";
+                        employee.Address = null;
+                        employee.Birthday = new DateTime();
+                        employee.Email = null;
+                        employee.Gender = null;
+                        new ManageDAOSQL().UpdateEmploy(employee);
+                        return "Upload hình thành công";
+                    }
+                    else
+                    {
+                        new LoginDAOFirebase().History(user, "Upload image " + id + " fail");
+                        return "Upload hình thất bại";
+                    }
+                }
+                else
+                {
+                    new LoginDAOFirebase().History(user, "Upload image " + id + " fail, not permission");
+                    return "Không có quyền truy cập";
+                }
+            }
+            else
+            {
+                new LoginDAOFirebase().History(user, "Upload image " + id + " fail, token fail");
+                return "Upload hình thất bại sai token";
+            }
+        }
     }
 }

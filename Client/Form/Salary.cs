@@ -145,5 +145,10 @@ namespace Client
                 profile = null;
             }
         }
+
+        public void CheckReset(bool check)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

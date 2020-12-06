@@ -29,7 +29,7 @@ namespace HTQLNhanSu.Controllers
         }
 
         [HttpGet]
-        [Route("api/manage")]
+        [Route("api/manage/searchbyid")]
         public IHttpActionResult SelectByID(String ID, String user, String token)
         {
             return Json(new ManageBUS().SelectByID(user, token, ID));
@@ -75,6 +75,28 @@ namespace HTQLNhanSu.Controllers
         public IHttpActionResult Delete(FilePut f)
         {
             return Json(new ManageBUS().DeleteEmploy(f.EMPLOYEE, f.USER, f.TOKEN));
+        }
+
+        [HttpPost]
+        [Route("api/getimage")]
+        public IHttpActionResult GetImage(ImageChange imageChange)
+        {
+            return Json(new ManageBUS().GetImage(imageChange.username, imageChange.token, imageChange.id));
+        }
+
+        [HttpPost]
+        [Route("api/postimage")]
+        public IHttpActionResult PostImage(ImageChange imageChange)
+        {
+            return Json(new ManageBUS().PostImage(imageChange.username, imageChange.token, imageChange.imagebitmap, imageChange.id));
+        }
+
+        public class ImageChange
+        {
+            public String username { get; set; }
+            public String token { get; set; }
+            public String imagebitmap { get; set; }
+            public String id { get; set; }
         }
 
         public class FilePut

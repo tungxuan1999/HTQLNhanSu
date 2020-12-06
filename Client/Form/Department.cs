@@ -83,10 +83,6 @@ namespace Client
             textBox2.DataBindings.Add(new Binding("Text", dataGridView1.DataSource, "ID", true, DataSourceUpdateMode.Never));
             textBox3.DataBindings.Clear();
             textBox3.DataBindings.Add(new Binding("Text", dataGridView1.DataSource, "Name", true, DataSourceUpdateMode.Never));
-            textBox4.DataBindings.Clear();
-            textBox4.DataBindings.Add(new Binding("Text", dataGridView1.DataSource, "Address", true, DataSourceUpdateMode.Never));
-            textBox5.DataBindings.Clear();
-            textBox5.DataBindings.Add(new Binding("Text", dataGridView1.DataSource, "Email", true, DataSourceUpdateMode.Never));
             comboBox2.DataBindings.Clear();
             comboBox2.DataBindings.Add(new Binding("Text", dataGridView1.DataSource, "Position", true, DataSourceUpdateMode.Never));
             comboBox3.DataBindings.Clear();
@@ -94,7 +90,7 @@ namespace Client
         }
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            DepartmentBUS.Employee newEmployee = new DepartmentBUS.Employee(textBox2.Text, textBox3.Text, textBox4.Text, textBox5.Text, comboBox2.Text.ToString(), comboBox3.Text.ToString());
+            DepartmentBUS.Employee newEmployee = new DepartmentBUS.Employee(textBox2.Text, textBox3.Text, null, "", "", comboBox2.Text.ToString(), comboBox3.Text.ToString(), new DateTime(), null);
             bool result = departmentBUS.Insert(new DepartmentBUS.FilePut(newEmployee, DataStatic.user, DataStatic.token));
             if (result)
             {
@@ -109,7 +105,7 @@ namespace Client
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            DepartmentBUS.Employee updateEmployee = new DepartmentBUS.Employee(textBox2.Text, textBox3.Text, textBox4.Text, textBox5.Text, comboBox2.Text.ToString(), comboBox3.Text.ToString());
+            DepartmentBUS.Employee updateEmployee = new DepartmentBUS.Employee(textBox2.Text, textBox3.Text, null, null, null, comboBox2.Text.ToString(), comboBox3.Text.ToString(), new DateTime(), null);
             bool result = departmentBUS.Update(new DepartmentBUS.FilePut(updateEmployee, DataStatic.user, DataStatic.token));
             if (result)
             {
@@ -126,7 +122,7 @@ namespace Client
             DialogResult dialogResult = MessageBox.Show("Bạn có chắc xóa không", "Xóa?", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                DepartmentBUS.Employee deleteEmployee = new DepartmentBUS.Employee(textBox2.Text, textBox3.Text, textBox4.Text, textBox5.Text, comboBox2.Text.ToString(), comboBox3.Text.ToString());
+                DepartmentBUS.Employee deleteEmployee = new DepartmentBUS.Employee(textBox2.Text, textBox3.Text, null, null, null, comboBox2.Text.ToString(), comboBox3.Text.ToString(), new DateTime(), null);
                 bool result = departmentBUS.Delete(new DepartmentBUS.FilePut(deleteEmployee, DataStatic.user, DataStatic.token));
                 if (result)
                 {
@@ -170,9 +166,17 @@ namespace Client
 
         public void CheckClosing(bool check)
         {
-            if(check)
+            if (check)
             {
                 profile = null;
+            }
+        }
+
+        public void CheckReset(bool check)
+        {
+            if (check)
+            {
+                ChangeDataGridView();
             }
         }
     }

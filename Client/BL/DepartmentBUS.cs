@@ -47,7 +47,7 @@ namespace Client.BL
             client.Headers[HttpRequestHeader.ContentType] = "application/json";
             client.Headers.Add(HttpRequestHeader.AcceptCharset, "utf-8");
             client.Encoding = Encoding.UTF8;
-            String response = client.DownloadString(new Uri(URL + "api/manage?user=" + user + "&token=" + token + "ID=" + ID));
+            String response = client.DownloadString(new Uri(URL + "api/manage/searchbyid?user=" + user + "&token=" + token + "&ID=" + ID));
             return JsonConvert.DeserializeObject<Employee>(response);
         }
 
@@ -143,19 +143,25 @@ namespace Client.BL
         {
             public String ID { get; set; }
             public String Name { get; set; }
+            public String Gender { get; set; }
             public String Address { get; set; }
             public String Email { get; set; }
             public String Position { get; set; }
             public String Department { get; set; }
-
-            public Employee(string iD, string name, string address, string email, string position, string department)
+            public DateTime Birthday { get; set; }
+            public String Image { get; set; }
+            public Employee() { }
+            public Employee(string iD, string name, string gender, string address, string email, string position, string department, DateTime birthday, string image)
             {
                 ID = iD;
                 Name = name;
+                Gender = gender;
                 Address = address;
                 Email = email;
                 Position = position;
                 Department = department;
+                Birthday = birthday;
+                Image = image;
             }
         }
 
